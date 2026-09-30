@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <title>Psychomotor Vigilance Test</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <section id="entry-screen" class="screen">
+      <div class="card">
+        <h1>Psychomotor Vigilance Test</h1>
+        <p>This test measures how quickly you respond to a visual stimulus.</p>
+        <p>During the test, keep your attention on the center of the screen. When the stimulus appears, touch the screen as quickly as possible.</p>
+        <p>Please enter your participant code.</p>
+        <form id="participant-form">
+          <label for="participant-code">Participant code</label>
+          <input id="participant-code" name="participantCode" type="text" autocomplete="off" autocapitalize="characters" maxlength="64" required>
+          <button type="submit">Continue</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="confirm-screen" class="screen hidden">
+      <div class="card">
+        <h1>Confirm participant code</h1>
+        <p>Your participant code is:</p>
+        <div id="confirmed-code" class="participant-code"></div>
+        <p>Please confirm that this is correct.</p>
+        <button id="confirm-start">Start test</button>
+        <button id="back-main" class="secondary">Go to main page</button>
+      </div>
+    </section>
+
+    <section id="ready-screen" class="screen hidden dark interactive">
+      <div class="center-content">
+        <h1>We are about to start</h1>
+        <p>A stimulus will appear after a random delay.</p>
+        <p>Touch the screen as quickly as possible when the stimulus appears.</p>
+        <p>Do not touch the screen before the stimulus appears.</p>
+        <p class="emphasis">Touch the screen to begin.</p>
+      </div>
+    </section>
+
+    <section id="test-screen" class="screen hidden dark interactive" aria-label="PVT test">
+      <div id="fixation" class="fixation hidden">+</div>
+      <div id="stimulus" class="stimulus hidden" aria-hidden="true"></div>
+      <div id="feedback" class="feedback hidden"></div>
+      <div class="test-instruction">Touch the screen when the stimulus appears</div>
+    </section>
+
+    <section id="complete-screen" class="screen hidden">
+      <div class="card">
+        <h1>Test complete</h1>
+        <p id="upload-status">Saving your results…</p>
+        <button id="retry-upload" class="hidden">Retry upload</button>
+        <button id="new-session" class="secondary hidden">Return to main page</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="storage.js"></script>
+  <script src="pvt.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
