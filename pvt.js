@@ -90,17 +90,21 @@ window.PVTController = class PVTController {
 
   showStimulus() {
     if (this.state !== "WAITING") return;
+  
     this.setState("STIMULUS");
     this.el.stimulus.classList.remove("hidden");
-
-    // Timestamp immediately adjacent to the DOM change. requestAnimationFrame could
-    // instead timestamp a presentation frame; hardware display latency still cannot
-    // be measured by browser JavaScript alone.
-    this.stimulusOnset = performance.now();
-
-    this.timer = setTimeout(() => {
-      if (this.state === "STIMULUS") this.recordStimulusResponse(performance.now(), "timeout");
-    }, this.config.stimulusTimeoutMs);
+  
+    requestAnimationFrame(timestamp => {
+      if (this.state !== "STIMULUS") return;
+  
+      this.stimulusOnset = timestamp;
+  
+      this.timer = setTimeout(() => {
+        if (this.state === "STIMULUS") {
+          this.recordStimulusResponse(performance.now(), "timeout");
+        }
+      }, this.config.stimulusTimeoutMs);
+    });
   }
 
   handleKey(event) {
