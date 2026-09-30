@@ -1,10 +1,10 @@
 window.PVT_CONFIG = Object.freeze({
   version: "1.1.0",
   testType: "duration",
-  durationMs: 0.5 * 60 * 1000,
+  durationMs: 1 * 60 * 1000,
   fixationMs: 400,
   minIsiMs: 1000,
-  maxIsiMs: 10000,
+  maxIsiMs: 4000,
   tooFastMs: 150,
   lapseMs: 500,
   sleepAttackMs: 30000,
