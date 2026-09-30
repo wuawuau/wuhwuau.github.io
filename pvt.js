@@ -1,3 +1,8 @@
+const SUPABASE_URL = "https://eiulnuhynypniblwpzjn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_i578YOrHw89jc2BFs6ZYKA_JNPnQ6m_";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 window.PVTController = class PVTController {
   constructor({ config, elements, session, onTrial, onFinish }) {
     this.config = config;

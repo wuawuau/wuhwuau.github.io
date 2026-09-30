@@ -73,19 +73,33 @@
     home.classList.add("hidden");
 
     try {
-      const response = await fetch(config.apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(session)
-      });
+      const rows = session.trials.map(trial => ({
+        participant_id: session.participantCode,
+        session_id: session.sessionId,
+        trial_number: trial.trial,
+        reaction_time_ms: trial.rtMs,
+        isi_ms: trial.isiMs,
+        lapse: trial.type === "lapse" || trial.type === "sleep_attack",
+        false_start: trial.type === "premature"
+      }));
 
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+      const { error } = await supabaseClient
+        .from("PVT")
+        .insert(rows);
+
+      if (error) throw error;
+
       await window.PVTStorage.remove(session.sessionId);
+
       status.textContent = "Your results have been saved successfully.";
       home.classList.remove("hidden");
+
     } catch (error) {
-      console.error(error);
-      status.textContent = "Your results are saved on this device, but could not be uploaded. Please keep this page open and retry.";
+      console.error("Supabase upload failed:", error);
+
+      status.textContent =
+        "Your results are saved on this device, but could not be uploaded. Please keep this page open and retry.";
+
       retry.classList.remove("hidden");
     }
   }
